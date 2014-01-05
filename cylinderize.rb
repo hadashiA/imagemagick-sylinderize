@@ -43,7 +43,7 @@ rollx = angle.abs * wrapperWidth / 360.0
 center_x = wrapperWidth  / 2.0
 center_y = wrapperHeight / 2.0
 factor = 1 / Math::PI
-radius = materialWidth / 4
+radius = wrapperWidth / 6.0
 
 # length1=`convert xc: -format "%[fx:$height]" info:`
 # length1=`convert xc: -format "%[fx:$length1*cos(pi*$pitch/180)]" info:`
@@ -61,6 +61,12 @@ height1 = length1 + radius2
 if ARGS[:verbose]
   puts '-' * 100
   puts <<DEBUG
+infile: #{infile}
+outfile: #{outfile}
+pitch: #{pitch}
+angle: #{angle}
+materialWidth: #{materialWidth}
+materialHeight: #{materialHeight}
 radius: #{radius}
 radius1: #{radius1}
 radius2: #{radius2}
@@ -76,7 +82,7 @@ end
 
 # sign=`convert xc: -format "%[fx:sign($angle)]" info:`
 # [ $sign -lt 0 ] && sign="-" || sign="+"
-sh %Q{convert -quiet -regard-warnings tyomeo.png +repage  -gravity center -background transparent -extent #{wrapperWidth}x#{wrapperHeight} -roll #{angle >= 0 ? '+' : '-'}#{rollx}+0 tmp1.png}
+sh %Q{convert -quiet -regard-warnings #{infile} +repage  -gravity center -background transparent -extent #{wrapperWidth}x#{wrapperHeight} -roll #{angle >= 0 ? '+' : '-'}#{rollx}+0 tmp1.png}
 
 # ## create horizontal cylinder map
 #
